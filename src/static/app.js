@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
-  // Function to fetch activities from API
+  // Traduction des textes dans le JS
   async function fetchActivities() {
     try {
       const response = await fetch("/activities");
       const activities = await response.json();
 
-      // Clear loading message
+      // Effacer le message de chargement
       activitiesList.innerHTML = "";
 
-      // Populate activities list
+      // Remplir la liste des activités
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Horaire :</strong> ${details.schedule}</p>
+          <p><strong>Places disponibles :</strong> ${spotsLeft} restantes</p>
         `;
 
         activitiesList.appendChild(activityCard);
 
-        // Add option to select dropdown
+        // Ajouter l'option au menu déroulant
         const option = document.createElement("option");
         option.value = name;
         option.textContent = name;
         activitySelect.appendChild(option);
       });
     } catch (error) {
-      activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
-      console.error("Error fetching activities:", error);
+      activitiesList.innerHTML = "<p>Impossible de charger les activités. Veuillez réessayer plus tard.</p>";
+      console.error("Erreur lors du chargement des activités :", error);
     }
   }
 
@@ -63,21 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.className = "success";
         signupForm.reset();
       } else {
-        messageDiv.textContent = result.detail || "An error occurred";
+        messageDiv.textContent = result.detail || "Une erreur est survenue";
         messageDiv.className = "error";
       }
 
       messageDiv.classList.remove("hidden");
 
-      // Hide message after 5 seconds
+      // Masquer le message après 5 secondes
       setTimeout(() => {
         messageDiv.classList.add("hidden");
       }, 5000);
     } catch (error) {
-      messageDiv.textContent = "Failed to sign up. Please try again.";
+      messageDiv.textContent = "Échec de l'inscription. Veuillez réessayer.";
       messageDiv.className = "error";
       messageDiv.classList.remove("hidden");
-      console.error("Error signing up:", error);
+      console.error("Erreur lors de l'inscription :", error);
     }
   });
 
